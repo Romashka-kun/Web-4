@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     var lastClicked;
     var currentDir = $('.root > .content');
+    currentDir.data('isLoaded', true);
 
     var tBody = $('tbody');
     var tree = $('.tree');
@@ -72,7 +73,7 @@ $(document).ready(function () {
                 },
                 success: function () {
                     loadDir(currentDir);
-                    loadTree(currentDir);
+                    // loadTree(currentDir);
                 }
             });
         })
@@ -89,6 +90,13 @@ $(document).ready(function () {
                     }
                 });
             })
+            .on('click', 'div[title="Delete"]', function () {
+                var delItems = [];
+                tBody.children('.selected').each( function () {
+                    delItems.push($(this).attr('rel'));
+                });
+                dialogConfirm(deleteFiles, delItems);
+            });
     });
 
     function loadDir(dir) {
@@ -104,7 +112,6 @@ $(document).ready(function () {
                 tBody.append(data)
             }
         });
-        console.log(currentDir.attr('rel'));
     }
 
     function loadTree(dir) {
@@ -125,6 +132,39 @@ $(document).ready(function () {
                 }
             });
         }
+    }
+
+    function deleteFiles(pathToDel) {
+        $.ajax({
+            method: 'POST',
+            url: 'buttonFunc.php',
+            data: {
+                'deleteFiles': pathToDel
+            },
+            success: function () {
+                loadDir(currentDir);
+                // loadTree(currentDir);
+            }
+        });
+    }
+
+    function dialogConfirm(funcToExecute, pathToFile) {
+
+        $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                "Delete all items": function() {
+                    funcToExecute(pathToFile);
+                    $( this ).dialog( "close" );
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
     }
 
 });

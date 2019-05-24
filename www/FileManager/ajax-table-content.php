@@ -40,7 +40,7 @@ function showTable($dir)
         $time = $file->getMTime();
         $date->setTimestamp($time);
         $size = formatBytes($file->getSize());
-        echo "<tr class='table-item table-file'>
+        echo "<tr class='table-item table-file' rel='$file'>
                     <td class='col-name'>{$file->getFilename()}</td>
                     <td class='col-perm'>$perms</td>
                     <td class='col-date'>{$date->format('d-m-Y H:i')}</td>

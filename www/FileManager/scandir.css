@@ -75,6 +75,19 @@ tbody > .table-item:hover {
     background-color: #e5f2fd;
 }
 
+/*  Additional Dialogs  */
+
+.confirmDialog {
+    border: 1px solid #000;
+}
+
+.confirmDialog > span {
+    color: white;
+    background-color: black;
+    padding: 20px;
+    margin: 10px;
+}
+
 /*  IMAGES  */
 
 .toolbar-button {
