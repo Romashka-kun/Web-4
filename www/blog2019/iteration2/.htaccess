@@ -1,9 +1,0 @@
-ErrorDocument 404 /page.php
-
-RewriteEngine On
-RewriteRule admin admin.php [L]
-RewriteRule auth auth.php [L]
-RewriteRule logout auth.php?o=logout [L]
-
-RewriteRule edit/([0-9]+) page.php?n=$1&o=edit [L]
-RewriteRule add page.php?o=add [L]
